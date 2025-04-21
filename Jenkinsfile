@@ -23,7 +23,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Use `sh` to run pytest command on Unix-based systems (macOS/Linux)
+                    // Run the pytest command to run all the tests
                     sh 'pytest test_app.py'
                 }
             }
