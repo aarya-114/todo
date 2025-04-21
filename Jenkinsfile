@@ -19,15 +19,17 @@ pipeline {
                 echo '✅ Build complete. App is ready.'
             }
         }
-    }
-    stage('Run Tests') {
-    steps {
-        script {
-            // Run the pytest command to run all the tests
-            bat 'pytest test_app.py'
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    // Run the pytest command to run all the tests
+                    bat 'pytest test_app.py'
+                }
+            }
         }
     }
-}
+
     post {
         success {
             echo '🎉 CI pipeline succeeded!'
