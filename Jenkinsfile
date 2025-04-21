@@ -1,44 +1,46 @@
 pipeline {
     agent any
 
+    environment {
+        PYTHON_PATH = "/usr/bin:/bin:/usr/sbin:/sbin:/Users/aaryapatil/Library/Python/3.9/bin"
+    }
+
     stages {
-        stage('Checkout Code') {
+        stage('Checkout SCM') {
             steps {
-                git url: 'https://github.com/aarya-114/todo.git', branch: 'main'
+                checkout scm
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip3 install --user -r requirements.txt'
-                sh 'pip3 install --user pytest'
+                script {
+                    // Install the required dependencies
+                    sh 'python3 -m pip install --user -r requirements.txt'
+                    sh 'python3 -m pip install --user pytest'
+                }
             }
         }
 
         stage('Build') {
             steps {
-                echo '✅ Build complete. App is ready.'
+                echo "✅ Build complete. App is ready."
             }
         }
 
         stage('Run Tests') {
             steps {
                 script {
-                    // Add the installation directory to PATH
-                    sh 'export PATH=$PATH:/Users/aaryapatil/Library/Python/3.9/bin'
-                    // Now run the pytest command
-                    sh 'pytest test_app.py'
+                    // Use python3 -m to call pytest
+                    sh 'python3 -m pytest test_app.py'
                 }
             }
         }
     }
 
     post {
-        success {
-            echo '🎉 CI pipeline succeeded!'
-        }
-        failure {
-            echo '❌ CI pipeline failed. Check the logs above.'
+        always {
+            echo "❌ CI pipeline failed. Check the logs above." 
         }
     }
 }
