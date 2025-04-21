@@ -11,6 +11,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'pip3 install --user -r requirements.txt'
+                sh 'pip3 install --user pytest'  // Add this line to ensure pytest is installed
             }
         }
 
