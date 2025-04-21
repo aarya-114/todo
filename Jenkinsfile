@@ -11,7 +11,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh 'pip3 install --user -r requirements.txt'
-                sh 'pip3 install --user pytest'  // Add this line to ensure pytest is installed
+                sh 'pip3 install --user pytest'
             }
         }
 
@@ -24,7 +24,9 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Run the pytest command to run all the tests
+                    // Add the installation directory to PATH
+                    sh 'export PATH=$PATH:/Users/aaryapatil/Library/Python/3.9/bin'
+                    // Now run the pytest command
                     sh 'pytest test_app.py'
                 }
             }
